@@ -11,7 +11,7 @@ resource "random_string" "rs" {
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = "airbnb-project${random_string.rs.result}"
+  bucket = "airbnb-project-backend-${random_string.rs.result}"
   acl    = "private"
 
   control_object_ownership = true

@@ -2,7 +2,7 @@
 terraform {
 
     backend "s3" {
-       bucket         = "airbnb-project46qwo9klci"
+       bucket         = "airbnb-project-backend-46qwo9klci"
        key            = "terraform/state"
        use_lockfile = true
        encrypt = true

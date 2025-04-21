@@ -56,7 +56,7 @@ variable "statements" {
   }))
   default     = [
         {
-
+            Sid = "AllowS3GetAndPut",
             Effect = "Allow",
             Action = [
                 "s3:GetObject",

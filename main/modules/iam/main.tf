@@ -141,9 +141,9 @@ resource "aws_iam_policy" "glue_crawl_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach" {
-  for_each = to_set([ aws_iam_policy.glue_crawl_policy.arn , var.aws_glue_managed_policy_arn ])
+  for_each =  {gcp_arn = aws_iam_policy.glue_crawl_policy.arn ,gmp_arn = var.aws_glue_managed_policy_arn}
   role       = aws_iam_role.glue_crawler_role.name
-  policy_arn = each.key
+  policy_arn = each.value
 }
 
 /*

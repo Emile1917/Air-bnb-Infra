@@ -49,14 +49,31 @@ variable "lambda_layer_name" {
 }
 
 
-variable "lambda_layer_pandas_arn" {
+variable "lambda_layer_begin_arn" {
   description = "The ARN of the Lambda layer for pandas"
   type        = string
-  default     = "arn:aws:lambda:us-east-1:123456789012:layer:pandas_layer:1"
+  default     = "arn:aws:lambda"
+}
+
+variable "lambda_layer_region" {
+  description = "The region of the Lambda layer"
+  type        = string
+  default     = "us-east-1"
   
+}
+variable "user_account_id" {
+  description = "The AWS account ID of the user"
+  type        = string
+  default = "336392948345"
 }
 
 
+variable "lambda_layer_ending_arn" {
+  description = "The ARN of the Lambda layer"
+  type        = string
+  default     = "layer:AWSSDKPandas-Python312:16"
+  
+}
 variable "lambda_layer_filename" {
   description = "The filename of the Lambda layer"
   type        = string

@@ -29,7 +29,7 @@ resource "aws_glue_crawler" "airbnb_crawler" {
   database_name = aws_glue_catalog_database.airbnb_database.name
   name          = var.crawler_name
   role          = var.crawler_role_arn
-  classifiers = [aws_glue_classifier.example.name]
+  classifiers = [aws_glue_classifier.custom_csv_classifier_name.name, aws_glue_classifier.custom_json_classifier_name.name]
   s3_target {
     path = "s3://${var.bucket_name}/"
 

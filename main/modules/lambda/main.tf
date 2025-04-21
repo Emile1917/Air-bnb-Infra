@@ -1,8 +1,13 @@
-
+locals {
+  lambda_layer_arn_start = var.lambda_layer_begin_arn
+  lambda_layer_arn_end   = var.lambda_layer_ending_arn
+  lambda_layer_region     = var.lambda_layer_region
+  lambda_layer_arn       = "${local.lambda_layer_arn_start}:${local.lambda_layer_region}:${var.user_account_id}:${local.lambda_layer_arn_end}"
+}
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "./utilities/lambda_function.py"
+  source_file = "../utilities/lambda_function.py"
   output_path = "lambda_function_payload.zip"
 }
 
@@ -12,7 +17,7 @@ resource "aws_lambda_function" "csv_formatter" {
   filename      = data.archive_file.lambda.output_path
   function_name = var.lambda_function_name
   role          = var.lambda_role_name
-  #handler       = "index.test"
+  handler       = "index.lambda_handler"
   
   source_code_hash = data.archive_file.lambda.output_base64sha256
   architectures = [ "x86_64" ]
@@ -22,7 +27,9 @@ resource "aws_lambda_function" "csv_formatter" {
   ephemeral_storage {
     size = var.ephemeral_storage_size
   }
-  layers = [var.lambda_layer_pandas_arn]
+  layers = [
+    local.lambda_layer_arn
+  ]
 
   reserved_concurrent_executions = -1
   environment {
@@ -30,12 +37,12 @@ resource "aws_lambda_function" "csv_formatter" {
       foo = "air-bnb"
     }
   }
-  depends_on = [ aws_lambda_permission.s3_invocation ,aws_cloudwatch_log_group.aws_lambda_log ]
+ 
 }
 
 
 resource "aws_cloudwatch_log_group" "aws_lambda_log" {
-  name              = "/aws/lambda/${aws.lambda_function.csv_formatter.function_name}"
+  name              = "/aws/lambda/${aws_lambda_function.csv_formatter.function_name}"
   retention_in_days = 14
 }
 /*
