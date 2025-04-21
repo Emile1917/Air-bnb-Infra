@@ -40,4 +40,3 @@ scripts/init.sh
 **/*.tar.lz7
 **/*.tar.lz8
 **/*.tar.lz9
-main/lambda_function_payload.zip
