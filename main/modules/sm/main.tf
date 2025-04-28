@@ -1,0 +1,1 @@
+ephemeral "aws_secretsmanager_random_password" "example" {}
